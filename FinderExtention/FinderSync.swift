@@ -49,16 +49,19 @@ class FinderSync: FIFinderSync {
                 ext = ".md"
             default: break
         }
-        
         if let target = FIFinderSyncController.default().targetedURL() {
             let path = target.path + "/file" + ext
-            do {
-                try "".write(toFile: path, atomically: false, encoding: .utf8)
-            }
-            catch {
-                NSLog("add file to \(path) failed : \(error.localizedDescription)")
-            }
+            postNotifiWithPath(path: path)
         }
+    }
+    
+    func postNotifiWithPath(path: String) {
+        let notifiId: CFString = "gw.newfile.add" as CFString
+        CFNotificationCenterPostNotification(CFNotificationCenterGetDistributedCenter(),
+                                             CFNotificationName(rawValue: notifiId),
+                                             nil,
+                                             ["path":path] as CFDictionary,
+                                             true);
     }
 }
 
