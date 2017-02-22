@@ -40,6 +40,24 @@ class FinderSync: FIFinderSync {
         return menu
     }
     
+    func generateRandomStringWithLength(_ length:Int) -> String {
+        
+        let randomString:NSMutableString = NSMutableString(capacity: length)
+        
+        let letters:NSMutableString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        var i: Int = 0
+        
+        while i < length {
+            
+            let randomIndex:Int = Int(arc4random_uniform(UInt32(letters.length)))
+            randomString.append("\(Character( UnicodeScalar( letters.character(at: randomIndex))!))")
+            i += 1
+        }
+        
+        return String(randomString)
+    }
+    
     @IBAction func addFile(_ item: NSMenuItem) {
         var ext = ""
         switch item.title {
@@ -50,7 +68,7 @@ class FinderSync: FIFinderSync {
             default: break
         }
         if let target = FIFinderSyncController.default().targetedURL() {
-            let path = target.path + "/file" + ext
+            let path = target.path + "/" + generateRandomStringWithLength(6) + ext
             do {
                 try "".write(toFile: path, atomically: false, encoding: .utf8)
             } catch  {
