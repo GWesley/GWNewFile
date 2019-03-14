@@ -29,7 +29,7 @@ class FinderSync: FIFinderSync {
     }
     
     override var toolbarItemImage: NSImage {
-        return NSImage(named: NSImageNameAddTemplate)!
+        return NSImage(named: NSImage.addTemplateName)!
     }
     
     override func menu(for menuKind: FIMenuKind) -> NSMenu {
