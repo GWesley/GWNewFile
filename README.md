@@ -1,7 +1,7 @@
 # GWNewFile
-An extention for add new file on mac osx (mac osx 新建文件扩展)
+An extention for add new file on Mac OS X  (Mac OS X 新建文件扩展)
 
-tips:
+Tips:
 
 1. Choose target "FinderExtention" and build, then select Finder for "Choose an app to run"
 
