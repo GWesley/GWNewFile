@@ -10,6 +10,13 @@ import Cocoa
 import FinderSync
 
 class FinderSync: FIFinderSync {
+    let fileTypes = [
+        "New Text": ".txt",
+        "New Markdown": ".md",
+        "New JS File": ".js",
+        "New Python File": ".py",
+        "New Html File": ".html"
+    ]
     
     var myFolderURL = URL(fileURLWithPath: "/Users")
     
@@ -35,8 +42,9 @@ class FinderSync: FIFinderSync {
     override func menu(for menuKind: FIMenuKind) -> NSMenu {
         // Produce a menu for the extension.
         let menu = NSMenu(title: "")
-        menu.addItem(withTitle: "New Text", action: #selector(addFile(_:)), keyEquivalent: "")
-        menu.addItem(withTitle: "New Md", action: #selector(addFile(_:)), keyEquivalent: "")
+        for (menuTitle, _) in fileTypes {
+            menu.addItem(withTitle: menuTitle, action: #selector(addFile(_:)), keyEquivalent: "")
+        }
         return menu
     }
     
@@ -59,16 +67,8 @@ class FinderSync: FIFinderSync {
     }
     
     @IBAction func addFile(_ item: NSMenuItem) {
-        var ext = ""
-        switch item.title {
-            case "New Text":
-                ext = ".txt"
-            case "New Md":
-                ext = ".md"
-            default: break
-        }
-        if let target = FIFinderSyncController.default().targetedURL() {
-            let path = target.path + "/" + generateRandomStringWithLength(6) + ext
+        if let ext = fileTypes[item.title], let target = FIFinderSyncController.default().targetedURL() {
+            let path = target.path + "/" + generateRandomStringWithLength(4) + ext
             do {
                 try "".write(toFile: path, atomically: false, encoding: .utf8)
             } catch  {
