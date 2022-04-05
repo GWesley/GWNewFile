@@ -71,6 +71,7 @@ class FinderSync: FIFinderSync {
             let path = target.path + "/" + generateRandomStringWithLength(4) + ext
             do {
                 try "".write(toFile: path, atomically: false, encoding: .utf8)
+                NSWorkspace().selectFile(path, inFileViewerRootedAtPath: "")
             } catch  {
                 print("add file to \(path) failed : \(error.localizedDescription)")
             }
